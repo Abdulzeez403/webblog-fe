@@ -26,7 +26,7 @@ export const PostList: React.FC<IProps> = ({ data, onOpen }) => {
       {/* <td className="whitespace-nowrap px-6 py-4 font-medium">1</td> */}
       <td className="whitespace-nowrap px-6 py-4">{data?.title}</td>
       <td className="whitespace-nowrap px-6 py-4">
-        <ApHTMLContent content={`<div>${data?.body.slice(0, 30)}</div>`} />
+        <ApHTMLContent content={`<div>${data?.body?.slice(0, 30)}</div>`} />
       </td>
       <td className="whitespace-nowrap px-6 py-4">{data?._id}</td>
 

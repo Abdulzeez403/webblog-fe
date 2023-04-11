@@ -47,7 +47,7 @@ export const BlogsTemplate: React.FC<IProps> = ({
                       />
                     </div>
 
-                    <h4 className="font-bold text-[1.3rem]">{data?.title}</h4>
+                    <h5 className="font-bold text-[1.3rem]">{data?.title}</h5>
                     {/* <ApHTMLContent  content={data?.body.slice(0,150)} /> */}
                     <div className="flex justify-between items-center ">
                       <div className="flex items-center gap-x-3">

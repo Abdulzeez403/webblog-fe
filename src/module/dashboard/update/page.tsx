@@ -1,10 +1,18 @@
 import useFetch from "@/components/hooks/fetch";
 import { DashboardNav } from "@/module/layout/dashboard";
+import { useEffect, useState } from "react";
 import { MyData } from "../post/modal";
 import { UpdateDetail } from "./detail";
 
 export const UpdateScreen = () => {
-  const { apiData } = useFetch({ url: "http://localhost:5000/api/blog/" });
+  const [user, setUser] = useState<any>({} as any)
+
+  useEffect(() => {
+    const currentUser  = JSON.parse(localStorage.getItem("currentUser") as any) ;
+    setUser(currentUser)
+  }, []);
+console.log(user?.id)
+  const { apiData } = useFetch({ url: "http://localhost:5000/api/blog/"+ user?.id });
   return (
     <DashboardNav>
       <table className="min-w-full text-left text-sm bg-skin-alt border">

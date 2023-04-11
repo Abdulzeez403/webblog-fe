@@ -16,8 +16,8 @@ const LoginPage = () => {
         ` http://localhost:5000/api/user/Login?`
       );
       const data = await response.json();
-    //   localStorage.setItem("accessToken", data.user.id);
-      localStorage.setItem("user", data.user.id);
+      localStorage.setItem("accessToken", data.user.id);
+      // localStorage.setItem("user", data.user.id);
       router.push("/dashboard/home");
     } catch (error) {
       console.error(error);

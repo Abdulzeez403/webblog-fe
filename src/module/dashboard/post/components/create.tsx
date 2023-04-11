@@ -10,7 +10,7 @@ import {
   FormikHelpers,
   FormikProps,
 } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillSave } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { MyData } from "../modal";
@@ -20,14 +20,22 @@ interface IProps {
 }
 
 export const CreatePost: React.FC<IProps> = ({ data }) => {
+  const [user, setUser] = useState<any>({} as any);
+
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser") as any);
+    setUser(currentUser);
+  }, []);
   const handleSubmit = async (
     values: MyData,
     { setSubmitting }: FormikHelpers<MyData>
   ) => {
     try {
-      await axios.post("http://localhost:5000/api/blog", values).then(() => {
-        toast.success("Post Successfully");
-      });
+      await axios
+        .post("http://localhost:5000/api/blog/" + user?.id, values)
+        .then(() => {
+          toast.success("Post Successfully");
+        });
     } catch (error) {
       console.error(error);
     }

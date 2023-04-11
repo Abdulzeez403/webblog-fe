@@ -1,11 +1,33 @@
 import AppPagination from "@/components/pagenation/pagination";
 import React from "react";
+import { MainLayout } from "../layout/page";
 import { DetailPage } from "./detail";
+import { IBlog } from "./models";
 
-export const HomePage = () => {
+interface IProps {
+  blogs: IBlog[];
+  isLoading: boolean;
+  isItemLoading: any;
+  category?: string;
+  data: any
+  handleItemLoad: (index: number) => void;
+}
+
+export const HomePage: React.FC<IProps> = ({
+  blogs,
+  isLoading,
+  isItemLoading,
+  data,
+  handleItemLoad, 
+}) => {
   return (
-    <div>
-      <DetailPage />
-    </div>
+    <MainLayout data={data}>
+      <DetailPage
+        blogs={blogs}
+        isLoading={isLoading}
+        isItemLoading={isItemLoading}
+        handleItemLoad={handleItemLoad}
+      />
+    </MainLayout>
   );
 };

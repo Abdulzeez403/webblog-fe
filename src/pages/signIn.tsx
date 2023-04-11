@@ -4,7 +4,7 @@ import React from 'react'
 
 const SignInScreen = () => {
   return (
-    <div><LoginPage/></div>
+    <div><SignInPage/></div>
   )
 }
 

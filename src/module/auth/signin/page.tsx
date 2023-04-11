@@ -1,8 +1,10 @@
-import React from 'react'
-import { SignInDetail } from './detail'
+import React from "react";
+import { SignInDetail } from "./detail";
 
 export const SignInPage = () => {
   return (
-    <div><SignInDetail/></div>
-  )
-}
+    <div >
+      <SignInDetail />
+    </div>
+  );
+};

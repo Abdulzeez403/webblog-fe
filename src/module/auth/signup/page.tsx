@@ -3,6 +3,6 @@ import { SignUpDetail} from './detail'
 
 export const SignUpPage = () => {
   return (
-    <div><SignUpDetail/></div>
+    <div ><SignUpDetail/></div>
   )
 }

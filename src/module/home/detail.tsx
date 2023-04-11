@@ -8,15 +8,22 @@ import { BlogsTemplate } from "./components/blogs";
 import { MainLayout } from "../layout/page";
 import useFetch from "@/components/hooks/fetch";
 import AppPagination from "@/components/pagenation/pagination";
+import { IBlog } from "./models";
 
-export const DetailPage = () => {
-  const { apiData, isLoading, serveError, handleItemLoad, itemLoading } =
-    useFetch({
-      url: "http://localhost:5000/api/blog/",
-    });
+interface IProps {
+  blogs: IBlog[];
+  isLoading: boolean;
+  isItemLoading: any;
+  handleItemLoad: (index: number) => void;
+}
 
+export const DetailPage: React.FC<IProps> = ({
+  blogs,
+  isLoading,
+  isItemLoading,
+  handleItemLoad,
+}) => {
   return (
-    <MainLayout>
       <div>
         <div className="flex gap-2">
           <div className="w-[100%] sm:w-[80%] md:w-[90] lg:w-[70%] bg-red-300 relative ">
@@ -78,9 +85,9 @@ export const DetailPage = () => {
         <div className="flex justify-between gap-2 my-2">
           <div className="w-[80%]">
             <BlogsTemplate
-              blogs={apiData}
+              blogs={blogs}
               isLoading={isLoading}
-              isItemLoading={itemLoading}
+              isItemLoading={isItemLoading}
               handleItemLoad={handleItemLoad}
             />
           </div>
@@ -99,9 +106,7 @@ export const DetailPage = () => {
             </h4>
           </div>
         </div>
-      {/* <AppPagination /> */}
-
+        {/* <AppPagination /> */}
       </div>
-    </MainLayout>
   );
 };

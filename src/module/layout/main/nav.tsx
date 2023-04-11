@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiAdminLine, RiFacebookFill } from "react-icons/ri";
 import {
   AiOutlineTwitter,
@@ -9,8 +9,24 @@ import { BiMenu, BiSearchAlt, BiUserCircle } from "react-icons/bi";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Link from "next/link";
+import useFetch from "@/components/hooks/fetch";
 
-export const Nav = () => {
+interface IProps {
+  // data: string;
+}
+
+export const Nav: React.FC<IProps> = () => {
+
+  const [user, setUser] = useState<any>({} as any)
+
+  useEffect(() => {
+    const currentUser  = JSON.parse(localStorage.getItem("currentUser") as any) ;
+    console.log(currentUser, "......");
+    setUser(currentUser)
+  }, []);
+
+
+
   const [toggle, setToggle] = useState(false);
   const [usertoggle, setUserToggle] = useState(false);
   return (
@@ -41,37 +57,52 @@ export const Nav = () => {
               />
             )}
           </div>
+          {user ? (
+            <div className="hidden relative sm:hidden md:hidden lg:flex">
+              <li
+                onClick={() => {
+                  setUserToggle(!usertoggle);
+                }}
+              >
+                <BiUserCircle size={25} />
+                <h4>{user?.username}</h4>
+              </li>
 
-          <div className="hidden relative sm:hidden md:hidden lg:flex">
-            <li onClick={()=>{setUserToggle(!usertoggle)}}>
-              <BiUserCircle size={25} />
-            </li>
-
-            <div className="absolute z-40  w-[8rem]  top-9 left-[-3rem] rounded-sm">
-              {usertoggle === true ? (
-                <div className="block  bg-white border-[1px]">
-                  <li className="px-4 py-1 border-b-[1px]">
-                    <Link
-                      href="/dashboard/home"
-                      className="flex items-center gap-x-1"
-                    >
-                      <RiAdminLine size={18} />
-                      Admin
-                    </Link>
-                  </li>
-                  <li className="px-4 py-1 ">
-                    <Link
-                      href="/dashboard/update"
-                      className="flex items-center gap-x-1"
-                    >
-                      <RiAdminLine size={18} />
-                      Sign-Out
-                    </Link>
-                  </li>
-                </div>
-              ) : null}
+              <div className="absolute z-40  w-[8rem]  top-9 left-[-3rem] rounded-sm">
+                {usertoggle === true ? (
+                  <div className="block  bg-white border-[1px]">
+                    <li className="px-4 py-1 border-b-[1px]">
+                      <Link
+                        href="/dashboard/home"
+                        className="flex items-center gap-x-1"
+                      >
+                        <RiAdminLine size={18} />
+                        Admin
+                      </Link>
+                    </li>
+                    <li className="px-4 py-1 ">
+                      <Link
+                        href="/dashboard/update"
+                        className="flex items-center gap-x-1"
+                      >
+                        <RiAdminLine size={18} />
+                        Sign-Out
+                      </Link>
+                    </li>
+                  </div>
+                ) : null}
+              </div>
             </div>
-          </div>
+          ) : (
+            <li className="px-4 py-1 border-b-[1px]">
+            <Link
+              href="/signIn"
+              className="flex items-center gap-x-1"
+            >
+            Login
+            </Link>
+          </li>
+          )}
 
           <BiSearchAlt size={25} />
         </div>
@@ -103,7 +134,7 @@ export const Nav = () => {
             <MdOutlineArrowDropDown size={25} />
           </li>
           <li className="flex gap-1 items-center">
-            <Link href="#" className="font-bold">
+            <Link href={`/?category`} className="font-bold">
               TECHNOLOGY
             </Link>
             <MdOutlineArrowDropDown size={25} />
