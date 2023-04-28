@@ -8,32 +8,32 @@ import RiseLoader from "react-spinners/RiseLoader";
 import Link from "next/link";
 
 interface IProps {
-  blogs: IBlog[];
+  blog: IBlog[];
   isLoading: boolean;
-  isItemLoading: any;
-  handleItemLoad: (index: any) => void;
+  itemLoading: any;
+  handleItemLoad: (index: number) => void;
 }
 
 export const BlogsTemplate: React.FC<IProps> = ({
-  blogs,
+  blog,
   isLoading,
-  isItemLoading,
   handleItemLoad,
+  itemLoading,
 }) => {
- 
   return (
     <div>
       {isLoading ? (
-        <div className="flex m-0 justify-center items-center h-96">
-          <RiseLoader color="black" size={40} />
-        </div>
+        <div>Loading</div>
       ) : (
         <div className="grid grid-flow-cols gap-3 lg:grid lg:grid-cols-2 ">
-          {blogs?.map((data, i) => (
-            <div key={i} className="border-2 px-3 shadow-lg w-96 lg:w-[100%]  ">
-              {isItemLoading[i] ? (
-                <div className="flex m-0 justify-center items-center h-96 bg-slate-500">
-                  <BounceLoader color="white" size={180} speedMultiplier={2} />
+          {blog?.map((data, i) => (
+            <div
+              key={i}
+              className="border-2 px-3 shadow-lg w-96  lg:w-[100%]  "
+            >
+              {itemLoading[i] ? (
+                <div className="flex m-0 justify-center items-center h-80 bg-slate-500">
+                  <BounceLoader color="white" size={150} speedMultiplier={2} />
                 </div>
               ) : (
                 <Link href={`blog/${data?._id}`}>
@@ -42,13 +42,12 @@ export const BlogsTemplate: React.FC<IProps> = ({
                       <Image
                         src={BlogImage}
                         alt="BlogsImage"
-                        // width={400}
-                        // height={400}
+                        // width={data?.image ? 400 : 0}
+                        // height={data?.image ? 400 : 0}
                       />
                     </div>
 
                     <h5 className="font-bold text-[1.3rem]">{data?.title}</h5>
-                    {/* <ApHTMLContent  content={data?.body.slice(0,150)} /> */}
                     <div className="flex justify-between items-center ">
                       <div className="flex items-center gap-x-3">
                         <div className="">

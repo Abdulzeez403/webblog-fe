@@ -4,6 +4,7 @@ import AppConfirm from "@/components/modal/comfirm";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MyData } from "../../post/modal";
+import { useBlogContext } from "@/module/context";
 
 interface IProps {
   data: MyData;
@@ -11,14 +12,9 @@ interface IProps {
 }
 
 export const PostList: React.FC<IProps> = ({ data, onOpen }) => {
+  const { deleteBlog: deletSingleBlog } = useBlogContext();
   const deleteBlog = () => {
-    try {
-      axios.delete(`http://localhost:5000/api/blog/${data?._id}`).then(() => {
-        toast.success("Deleted Successfully");
-      });
-    } catch (error) {
-      toast.error("Deleted Failed!");
-    }
+    deletSingleBlog(data?._id as any);
   };
 
   return (

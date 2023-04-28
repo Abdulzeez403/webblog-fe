@@ -3,12 +3,12 @@ import { Footer } from "./main/footer";
 import { Nav } from "./main/nav";
 interface IProps {
   children: React.ReactNode;
-  data: any
+  category?: string
 }
-export const MainLayout: React.FC<IProps> = ({ children, data }) => {
+export const MainLayout: React.FC<IProps> = ({ children, category }) => {
   return (
     <div className=" w-[100%] mx-auto sm:w-[80%] sm:mx-auto md:w-[80%] md:mx-auto lg:w-[80%] ">
-      <Nav data={data} />
+      <Nav category={category} />
       {children}
       <Footer />
     </div>

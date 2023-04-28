@@ -3,5 +3,6 @@ export interface IFetchResult {
     isLoading: boolean;
     serveError: any | null;
     itemLoading?:boolean[];
+   
     handleItemLoad:(index: any)=>void;
 }

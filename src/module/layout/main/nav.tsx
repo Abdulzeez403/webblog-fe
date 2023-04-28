@@ -9,23 +9,18 @@ import { BiMenu, BiSearchAlt, BiUserCircle } from "react-icons/bi";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Link from "next/link";
-import useFetch from "@/components/hooks/fetch";
+import { useUserContext } from "@/module/UserContext";
+import { useBlogContext } from "@/module/context";
+import router, { useRouter } from "next/router";
 
-interface IProps {
-  // data: string;
-}
-
-export const Nav: React.FC<IProps> = () => {
-
-  const [user, setUser] = useState<any>({} as any)
+export const Nav = () => {
+  const { user, CurrentUser, LogOutUser } = useUserContext();
 
   useEffect(() => {
-    const currentUser  = JSON.parse(localStorage.getItem("currentUser") as any) ;
-    console.log(currentUser, "......");
-    setUser(currentUser)
+    CurrentUser();
   }, []);
 
-
+  const { FilterCategory, category } = useBlogContext();
 
   const [toggle, setToggle] = useState(false);
   const [usertoggle, setUserToggle] = useState(false);
@@ -63,9 +58,11 @@ export const Nav: React.FC<IProps> = () => {
                 onClick={() => {
                   setUserToggle(!usertoggle);
                 }}
+                className="flex gap-x-3"
               >
-                <BiUserCircle size={25} />
                 <h4>{user?.username}</h4>
+
+                <BiUserCircle size={25} />
               </li>
 
               <div className="absolute z-40  w-[8rem]  top-9 left-[-3rem] rounded-sm">
@@ -95,16 +92,33 @@ export const Nav: React.FC<IProps> = () => {
             </div>
           ) : (
             <li className="px-4 py-1 border-b-[1px]">
-            <Link
-              href="/signIn"
-              className="flex items-center gap-x-1"
-            >
-            Login
-            </Link>
-          </li>
+              <Link href="/signIn" className="flex items-center gap-x-1">
+                Login
+              </Link>
+            </li>
           )}
 
-          <BiSearchAlt size={25} />
+          <div>
+            {user ? (
+              <div>
+                <button
+                  onClick={() => {
+                    LogOutUser();
+                  }}
+                >
+                  LogOut
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button>
+                  <Link href="/signUp">SignUp</Link>
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* <BiSearchAlt size={25} /> */}
         </div>
       </div>
       <div className="px-3 ">
@@ -115,32 +129,47 @@ export const Nav: React.FC<IProps> = () => {
               : "hidden justify-center text-center gap-4 border-y-2 py-4   sm:block sm:justify-center md:hidden lg:flex"
           }
         >
-          <li className="flex gap-1 items-center">
-            <Link href="#" className="font-bold">
-              HOME
+          <li
+            className="flex gap-1 items-center"
+            onClick={() => FilterCategory("")}
+          >
+            <Link href={`?category=${category}`} className="font-bold">
+              All
             </Link>
             <MdOutlineArrowDropDown size={25} />
           </li>
-          <li className="flex gap-1 items-center">
-            <Link href="#" className="font-bold">
+          <li
+            className="flex gap-1 items-center"
+            onClick={() => FilterCategory("lifestyle")}
+          >
+            <Link href={`?category=${category}`} className="font-bold">
               LIFESTYLE
             </Link>
             <MdOutlineArrowDropDown size={25} />
           </li>
-          <li className="flex gap-1 items-center">
-            <Link href="#" className="font-bold">
+          <li
+            className="flex gap-1 items-center"
+            onClick={() => FilterCategory("fashion")}
+          >
+            <Link href={`?category=${category}`} className="font-bold">
               FASHION
             </Link>
             <MdOutlineArrowDropDown size={25} />
           </li>
-          <li className="flex gap-1 items-center">
-            <Link href={`/?category`} className="font-bold">
+          <li
+            className="flex gap-1 items-center"
+            onClick={() => FilterCategory("tech")}
+          >
+            <Link href={`?category=${category}`} className="font-bold">
               TECHNOLOGY
             </Link>
             <MdOutlineArrowDropDown size={25} />
           </li>
-          <li className="flex gap-1 items-center">
-            <Link href="#" className="font-bold">
+          <li
+            className="flex gap-1 items-center"
+            onClick={() => FilterCategory("travel")}
+          >
+            <Link href={`?category=${category}`} className="font-bold">
               TRAVEL
             </Link>
             <MdOutlineArrowDropDown size={25} />

@@ -1,6 +1,8 @@
 import { ApButton } from "@/components/button";
 import { ApTextInput } from "@/components/input";
 import { ApTextEditor } from "@/components/input/TextEditor";
+import { useBlogContext } from "@/module/context";
+import { useUserContext } from "@/module/UserContext";
 import axios from "axios";
 import {
   ErrorMessage,
@@ -20,36 +22,26 @@ interface IProps {
 }
 
 export const CreatePost: React.FC<IProps> = ({ data }) => {
-  const [user, setUser] = useState<any>({} as any);
+  const { user, CurrentUser } = useUserContext();
+  const { CreateBlog } = useBlogContext();
 
-  useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser") as any);
-    setUser(currentUser);
-  }, []);
-  const handleSubmit = async (
-    values: MyData,
-    { setSubmitting }: FormikHelpers<MyData>
-  ) => {
-    try {
-      await axios
-        .post("http://localhost:5000/api/blog/" + user?.id, values)
-        .then(() => {
-          toast.success("Post Successfully");
-        });
-    } catch (error) {
-      console.error(error);
-    }
+ 
 
-    setSubmitting(false);
+  const handleSubmit = (values: MyData) => {
+    const payload = { ...values };
+    const userId = user?.id as any;
+    CreateBlog(payload, userId);
+    console.log(payload, userId, "payload");
+    CurrentUser();
   };
 
   return (
     <Formik
-      initialValues={{ title: "", body: "", description: "", author: "" }}
+      initialValues={{ title: "", body: "", image: "", category: "" }}
       // validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {(props: FormikProps<any>) => (
         <Form>
           <ApTextInput
             type="text"
@@ -57,18 +49,24 @@ export const CreatePost: React.FC<IProps> = ({ data }) => {
             name="title"
             className=" p-2 rounded-md outline-0 border hover:bg-white"
           />
-          {/* <ApTextInput
-            type="textarea"
-            label="Enter Article"
-            name="body"
+          <ApTextInput
+            type="text"
+            label="Category"
+            name="category"
             className=" p-2 rounded-md outline-0 border hover:bg-white"
-          /> */}
+          />
+          <ApTextInput
+            type="text"
+            label="Image-url"
+            name="image"
+            className=" p-2 rounded-md outline-0 border hover:bg-white"
+          />
 
           <ApTextEditor label="Enter Article" name="body" />
 
           <button
             type="submit"
-            disabled={isSubmitting}
+            // disabled={isSubmitting}
             className="text-white bg-blue-500 rounded-md p-2 px-10 text-lg font-bold"
           >
             Submit
@@ -78,3 +76,18 @@ export const CreatePost: React.FC<IProps> = ({ data }) => {
     </Formik>
   );
 };
+
+// values: MyData,
+// { setSubmitting }: FormikHelpers<MyData>
+// ) => {
+// try {
+//   await axios
+//     .post("http://localhost:5000/api/blog/" + user?.id, values)
+//     .then(() => {
+//       toast.success("Post Successfully");
+//     });
+// } catch (error) {
+//   console.error(error);
+// }
+
+// setSubmitting(false);

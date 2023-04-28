@@ -8,7 +8,7 @@ interface IProps {
 
 const useFetch = ({ url }: IProps): IFetchResult => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiData, setApiData] = useState<any | null >(null);
+  const [apiData, setApiData] = useState<any | null>(null);
   const [serveError, setServeError] = useState<any | null>(null);
   const [itemLoading, setItemLoading] = useState<boolean[] | any>([]);
 
@@ -35,6 +35,12 @@ const useFetch = ({ url }: IProps): IFetchResult => {
     fetchData();
   }, [url]);
 
-  return { isLoading, apiData, serveError, handleItemLoad, itemLoading };
+  return {
+    isLoading,
+    apiData,
+    serveError,
+    handleItemLoad,
+    itemLoading,
+  };
 };
 export default useFetch;

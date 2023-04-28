@@ -1,18 +1,22 @@
 import useFetch from "@/components/hooks/fetch";
+import { useBlogContext } from "@/module/context";
 import { DashboardNav } from "@/module/layout/dashboard";
+import { useUserContext } from "@/module/UserContext";
 import { useEffect, useState } from "react";
 import { MyData } from "../post/modal";
 import { UpdateDetail } from "./detail";
+import { useRouter } from "next/router";
 
 export const UpdateScreen = () => {
-  const [user, setUser] = useState<any>({} as any)
+  const { user, CurrentUser } = useUserContext();
+  const { FetchUserBlog, userBlog } = useBlogContext();
 
   useEffect(() => {
-    const currentUser  = JSON.parse(localStorage.getItem("currentUser") as any) ;
-    setUser(currentUser)
+    CurrentUser();
+    FetchUserBlog(user?.id);
+    console.log(user?.id);
   }, []);
-console.log(user?.id)
-  const { apiData } = useFetch({ url: "http://localhost:5000/api/blog/"+ user?.id });
+
   return (
     <DashboardNav>
       <table className="min-w-full text-left text-sm bg-skin-alt border">
@@ -36,7 +40,7 @@ console.log(user?.id)
           </tr>
         </thead>
         <tbody>
-          {apiData?.map((data: MyData, i: number) => (
+          {userBlog?.map((data: any, i: number) => (
             <UpdateDetail blog={data} key={i} />
           ))}
         </tbody>

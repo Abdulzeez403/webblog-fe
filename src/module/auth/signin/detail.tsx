@@ -72,7 +72,7 @@ export const SignInDetail = () => {
 
               <div className="text-center py-4">
                 If you dont have an account
-                <Link href="/signIn" className="text-yellow-300 px-2">
+                <Link href="/signUp" className="text-yellow-300 px-2">
                   SignUp
                 </Link>
               </div>

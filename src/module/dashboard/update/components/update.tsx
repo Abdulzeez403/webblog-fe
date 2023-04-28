@@ -14,6 +14,7 @@ import {
 } from "formik";
 import { MyData } from "../../post/modal";
 import { toast } from "react-toastify";
+import { useBlogContext } from "@/module/context";
 
 interface IProps {
   FormData: MyData;
@@ -23,24 +24,17 @@ interface IProps {
 export const UpdateForm: React.FC<IProps> = ({ FormData, onDismiss }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingText, setLoadingText] = useState("Please Wait");
-  const handleSubmit = async (
-    values: MyData,
-    { setSubmitting }: FormikHelpers<MyData>
-  ) => {
-    await axios
-      .put(`http://localhost:5000/api/blog/${FormData?._id}`, values,
-      
-       )
-      .then(() => {
-        toast.success("Update Successfully");
-      })
-      .then(() => {
-        if (onDismiss) onDismiss();
-      });
-    setSubmitting(false);
-    // setUpdateData(values)
-  };
+  const { UpdateBlog } = useBlogContext();
 
+  const handleSubmit = async (values: any) => {
+    const payload = { ...values };
+    const id = FormData?._id as any;
+    UpdateBlog(payload, id).then(() => {
+      if (onDismiss) {
+        onDismiss();
+      }
+    });
+  };
   return (
     <Formik
       initialValues={{

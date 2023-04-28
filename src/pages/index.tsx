@@ -1,21 +1,13 @@
-import useFetch from "@/components/hooks/fetch";
 import { HomePage } from "@/module/home/page";
-import axios from "axios";
 
 function Home({ data }: any) {
-  const { apiData, isLoading, serveError, handleItemLoad, itemLoading } =
-    useFetch({
-      url: `http://localhost:5000/api/blog`
-    });
+  // const [page, setPage] = useState(1);
+  // const [limit, setLimit] = useState(6);
+  // const [category, setCategry] = useState("tech");
+
   return (
     <div>
-      <HomePage
-        blogs={apiData}
-        isLoading={isLoading}
-        isItemLoading={itemLoading}
-        handleItemLoad={handleItemLoad}
-        data={data}
-      />
+      <HomePage />
     </div>
   );
 }
