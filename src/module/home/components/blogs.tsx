@@ -21,12 +21,15 @@ export const BlogsTemplate: React.FC<IProps> = ({
   itemLoading,
 }) => {
   return (
+
+
     <div>
       {isLoading ? (
         <div>Loading</div>
       ) : (
         <div className="grid grid-flow-cols gap-3 lg:grid lg:grid-cols-2 ">
           {blog?.map((data, i) => (
+
             <div
               key={i}
               className="border-2 px-3 shadow-lg w-96  lg:w-[100%]  "
@@ -42,8 +45,8 @@ export const BlogsTemplate: React.FC<IProps> = ({
                       <Image
                         src={BlogImage}
                         alt="BlogsImage"
-                        // width={data?.image ? 400 : 0}
-                        // height={data?.image ? 400 : 0}
+                      // width={data?.image ? 400 : 0}
+                      // height={data?.image ? 400 : 0}
                       />
                     </div>
 
@@ -78,5 +81,7 @@ export const BlogsTemplate: React.FC<IProps> = ({
         </div>
       )}
     </div>
+
+
   );
 };

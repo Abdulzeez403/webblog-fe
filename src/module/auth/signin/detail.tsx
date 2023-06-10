@@ -67,7 +67,9 @@ export const SignInDetail = () => {
                 type="submit"
                 className="bg-blue-400 text-white font-semibold px-10 py-2 rounded-sm "
               >
-                Log In
+                {loading ?
+                 <h3>Loading...</h3> :
+                  <h3>LogIn</h3>}
               </button>
 
               <div className="text-center py-4">

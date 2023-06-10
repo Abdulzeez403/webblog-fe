@@ -4,7 +4,7 @@ import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter } from "react-icons/bs";
 
 export const Footer = () => {
   return (
-    <div className=" bg-black py-[4rem]">
+    <div className=" bg-black py-[4rem] mx-auto">
       <div className=" block w-[80%] mx-auto md:flex md:justify-between md:items-center lg:flex lg:justify-between lg:items-center">
         <div>
           <nav className="text-center">
